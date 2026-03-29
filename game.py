@@ -1,11 +1,10 @@
 import pygame
-import Sword
-import Sprite
+from Environment import Environment
 
 pygame.init()
 
 SW = 1000
-SH = 800
+SH = 700
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -14,14 +13,19 @@ BLUE = (0, 0, 255)
 
 screen = pygame.display.set_mode((SW, SH))
 
-class Environment:
+class Game:
     def __init__(self):
-        pass
+        self.environment = Environment(screen, SW, SH)
 
     def render(self):
-        pass
+        screen.fill(WHITE)
 
-g = Environment()
+        self.environment.render()
+
+        pygame.display.update()
+
+
+g = Game()
 
 while True:
     for event in pygame.event.get():
