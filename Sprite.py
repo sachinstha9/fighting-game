@@ -18,6 +18,22 @@ class Sprite:
 
         self.sword = Sword(self.screen)
 
+        self.attack = False
+
+        self.frame_count = 0
+
+    def sword_attack(self):
+        if self.attack:
+            if self.frame_count == 0:
+                self.sword.is_attacking = True
+
+            self.frame_count += 1
+
+            if self.frame_count >= 10:
+                self.frame_count = 0
+                self.sword.is_attacking = False
+                self.attack = False
+
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))
 

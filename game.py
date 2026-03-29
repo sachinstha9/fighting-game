@@ -6,16 +6,15 @@ pygame.init()
 SW = 1000
 SH = 700
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-
 screen = pygame.display.set_mode((SW, SH))
+clock = pygame.time.Clock()
 
 class Game:
     def __init__(self):
         self.environment = Environment(screen, SW, SH)
+
+    def action(self, events):
+        self.environment.action(events)
 
     def render(self):
         screen.fill(WHITE)
@@ -24,12 +23,16 @@ class Game:
 
         pygame.display.update()
 
+        clock.tick(60)
 
 g = Game()
 
 while True:
-    for event in pygame.event.get():
+    events = pygame.event.get()
+
+    for event in events:
         if event.type == pygame.QUIT:
             exit()
 
+    g.action(events)
     g.render()

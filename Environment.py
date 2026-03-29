@@ -16,9 +16,24 @@ class Environment:
 
         self.ground_color = COLORS["GROUND"] 
 
+        self.sprite1_attack = False
+        self.sprite2_attack = False
+
+    def action(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.sprite1_attack = True
+
     def render(self):
         self.sprite1.render()
         self.sprite2.render()
+
+        if self.sprite1_attack:
+            self.sprite1.attack = self.sprite1_attack
+            self.sprite1_attack = False
+
+        self.sprite1.sword_attack()
 
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))
 
