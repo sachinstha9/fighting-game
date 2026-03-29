@@ -1,5 +1,6 @@
 import pygame
 from Environment import Environment
+from Colors import COLORS
 
 pygame.init()
 
@@ -17,7 +18,7 @@ class Game:
         self.environment.action(events)
 
     def render(self):
-        screen.fill(WHITE)
+        screen.fill(COLORS["BACKGROUND"])
 
         self.environment.render()
 

@@ -18,21 +18,23 @@ class Sprite:
 
         self.sword = Sword(self.screen)
 
-        self.attack = False
+        self.is_attacking = False
+        self.attack_time = 0
 
-        self.frame_count = 0
+    def attack(self):
+        if not self.is_attacking:
+            self.is_attacking = True
+            self.attack_timer = 10 
 
     def sword_attack(self):
-        if self.attack:
-            if self.frame_count == 0:
+        if self.is_attacking:
+            if self.attack_timer == 10:
                 self.sword.is_attacking = True
 
-            self.frame_count += 1
-
-            if self.frame_count >= 10:
-                self.frame_count = 0
+            self.attack_timer -= 1
+            if self.attack_timer <= 0:
+                self.is_attacking = False
                 self.sword.is_attacking = False
-                self.attack = False
 
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))

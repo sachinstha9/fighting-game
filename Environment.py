@@ -23,15 +23,11 @@ class Environment:
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.sprite1_attack = True
+                    self.sprite1.attack()
 
     def render(self):
         self.sprite1.render()
         self.sprite2.render()
-
-        if self.sprite1_attack:
-            self.sprite1.attack = self.sprite1_attack
-            self.sprite1_attack = False
 
         self.sprite1.sword_attack()
 
