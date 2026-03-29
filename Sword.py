@@ -1,6 +1,5 @@
 import pygame
-
-RED = (255, 0, 0)
+from Colors import COLORS
 
 class Sword:
     def __init__(self, screen):
@@ -9,7 +8,7 @@ class Sword:
         self.width = 10
         self.height = 100
 
-        self.color = RED
+        self.color = COLORS["SWORD"]
 
         self.position = [0, 0]
 
