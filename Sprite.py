@@ -16,12 +16,13 @@ class Sprite:
         self.width = 40
         self.height = 150
 
-        self.position = [50 if self.initial_facing == 'right' else self.SW - self.width - 50, self.ground_position[1] - self.height]
+        self.position = [200 if self.initial_facing == 'right' else self.SW - self.width - 200, self.ground_position[1] - self.height]
 
         self.sword = Sword(self.screen)
 
         self.is_attacking = False
         self.attack_timer = 0
+        self.allow_attack = True
 
         self.velocity = 10
 
@@ -78,6 +79,10 @@ class Sprite:
                 if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.height = 150
                     self.position[1] = self.ground_position[1] - self.height
+                
+                if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+                    if not self.allow_attack:
+                        self.allow_attack = True
 
     def jump(self):
         if self.is_jumping:
@@ -91,9 +96,10 @@ class Sprite:
                 self.velocity_y = 15
 
     def attack(self):
-        if not self.is_attacking:
+        if not self.is_attacking and self.allow_attack:
             self.is_attacking = True
             self.attack_timer = 10 
+            self.allow_attack = False
 
     def sword_attack(self):
         if self.is_attacking:

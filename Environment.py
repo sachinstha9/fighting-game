@@ -19,9 +19,43 @@ class Environment:
         self.sprite1_attack = False
         self.sprite2_attack = False
 
+        self.before_health_sprite1 = self.sprite1.health
+        self.before_health_sprite2 = self.sprite2.health
+
     def action(self, keys, events):
         self.sprite1.action(keys, events)
         self.sprite2.action(keys, events)
+
+    def sword_collision_detection(self, sword, enemy):
+        return (sword.position[0] < enemy.position[0] + enemy.width and
+            sword.position[0] + sword.width > enemy.position[0] and
+            sword.position[1] < enemy.position[1] + enemy.height and
+            sword.position[1] + sword.height > enemy.position[1])
+
+    def handle_attack(self):
+        sword1 = self.sprite1.sword
+        sword2 = self.sprite2.sword
+        sprite1 = self.sprite1
+        sprite2 = self.sprite2
+
+        # sprite 1 attack sprite 2
+        if sprite1.is_attacking:
+            if self.sword_collision_detection(sword1, sprite2) and self.before_health_sprite2 == sprite2.health:
+                if sprite2.health > 0:
+                    sprite2.health -= 5
+
+        if not sprite1.is_attacking:
+            self.before_health_sprite2 = sprite2.health
+
+        # sprite 2 attack sprite 1
+        if sprite2.is_attacking:
+            if self.sword_collision_detection(sword2, sprite1) and self.before_health_sprite1 == sprite1.health:
+                if sprite1.health > 0:
+                    sprite1.health -= 5
+
+        if not sprite2.is_attacking:
+            self.before_health_sprite1 = sprite1.health
+
 
     def render(self):
         self.sprite1.render()
@@ -32,6 +66,8 @@ class Environment:
 
         self.sprite1.jump()
         self.sprite2.jump()
+
+        self.handle_attack()
 
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))
 
