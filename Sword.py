@@ -15,6 +15,13 @@ class Sword:
         self.is_attacking = False
 
     def render(self, sprite_position, spite_width, sprite_facing='right'):
+        if self.is_attacking:
+            self.width = 100
+            self.height = 10
+        else:
+            self.width = 10
+            self.height = 100
+
         x_shift = 10
         y_shift = 60
 
@@ -25,11 +32,5 @@ class Sword:
         
         self.position[1] = sprite_position[1] + 1 * (10 if self.is_attacking else -y_shift)
 
-        if self.is_attacking:
-            self.width = 100
-            self.height = 10
-        else:
-            self.width = 10
-            self.height = 100
 
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))

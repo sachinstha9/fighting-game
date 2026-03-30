@@ -19,17 +19,18 @@ class Environment:
         self.sprite1_attack = False
         self.sprite2_attack = False
 
-    def action(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    self.sprite1.attack()
+    def action(self, keys, events):
+        self.sprite1.action(keys, events)
+        self.sprite2.action(keys, events)
 
     def render(self):
         self.sprite1.render()
         self.sprite2.render()
 
         self.sprite1.sword_attack()
+        self.sprite2.sword_attack()
+
+        self.sprite1.jump()
 
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))
 

@@ -3,23 +3,67 @@ from Sword import Sword
 from Colors import COLORS
 
 class Sprite:
-    def __init__(self, screen, SW, SH, ground_position, facing='right', color=COLORS["SPRITE1"]):
+    def __init__(self, screen, SW, SH, ground_position, initial_facing='right', color=COLORS["SPRITE1"]):
         self.screen = screen
         self.SW = SW
         self.SH = SH
         self.ground_position = ground_position
-        self.facing = facing
+        self.initial_facing = initial_facing
         self.color = color
+
+        self.current_facing = self.initial_facing
 
         self.width = 40
         self.height = 150
 
-        self.position = [100 if facing == 'right' else self.SW - self.width - 100, self.ground_position[1] - self.height]
+        self.position = [100 if self.initial_facing == 'right' else self.SW - self.width - 100, self.ground_position[1] - self.height]
 
         self.sword = Sword(self.screen)
 
         self.is_attacking = False
-        self.attack_time = 0
+        self.attack_timer = 0
+
+        self.velocity = 10
+
+        self.is_jumping = False
+
+        self.velocity_y = 15
+        self.gravity = 0.7
+
+    def action(self, keys, events=None):
+        if self.initial_facing == 'right':
+            if keys[pygame.K_SPACE]:
+                self.attack()
+
+            if keys[pygame.K_RIGHT]:
+                self.position[0] += self.velocity
+            
+            if keys[pygame.K_LEFT]:
+                self.position[0] -= self.velocity
+
+            if keys[pygame.K_DOWN]:
+                self.height = 100
+                self.position[1] = self.ground_position[1] - self.height
+
+            if keys[pygame.K_UP]:
+                self.is_jumping = True
+
+            for event in events:
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_DOWN:
+                        self.height = 150
+                        self.position[1] = self.ground_position[1] - self.height
+
+    def jump(self):
+        if self.is_jumping:
+            self.velocity_y -= self.gravity
+
+            self.position[1] -= self.velocity_y
+
+            if self.position[1] + self.height >= self.ground_position[1]:
+                self.is_jumping = False
+                self.position[1] = self.ground_position[1] - self.height
+                self.velocity_y = 15
 
     def attack(self):
         if not self.is_attacking:
@@ -32,6 +76,7 @@ class Sprite:
                 self.sword.is_attacking = True
 
             self.attack_timer -= 1
+
             if self.attack_timer <= 0:
                 self.is_attacking = False
                 self.sword.is_attacking = False
@@ -39,4 +84,4 @@ class Sprite:
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))
 
-        self.sword.render(self.position, self.width, self.facing)
+        self.sword.render(self.position, self.width, self.current_facing)

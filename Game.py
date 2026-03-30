@@ -14,8 +14,8 @@ class Game:
     def __init__(self):
         self.environment = Environment(screen, SW, SH)
 
-    def action(self, events):
-        self.environment.action(events)
+    def action(self, keys, events):
+        self.environment.action(keys, events)
 
     def render(self):
         screen.fill(COLORS["BACKGROUND"])
@@ -30,10 +30,11 @@ g = Game()
 
 while True:
     events = pygame.event.get()
+    keys = pygame.key.get_pressed()
 
     for event in events:
         if event.type == pygame.QUIT:
             exit()
 
-    g.action(events)
+    g.action(keys, events)
     g.render()
