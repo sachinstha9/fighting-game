@@ -35,6 +35,7 @@ class Environment:
     def handle_attack(self):
         sword1 = self.sprite1.sword
         sword2 = self.sprite2.sword
+
         sprite1 = self.sprite1
         sprite2 = self.sprite2
 
@@ -56,8 +57,7 @@ class Environment:
         if not sprite2.is_attacking:
             self.before_health_sprite1 = sprite1.health
 
-
-    def render(self):
+    def update(self):
         self.sprite1.render()
         self.sprite2.render()
 
@@ -67,8 +67,13 @@ class Environment:
         self.sprite1.jump()
         self.sprite2.jump()
 
+        self.sprite1.check_boundary()
+        self.sprite2.check_boundary()
+
+
         self.handle_attack()
 
+    def render(self):
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))
 
 

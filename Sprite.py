@@ -112,6 +112,12 @@ class Sprite:
                 self.is_attacking = False
                 self.sword.is_attacking = False
 
+    def check_boundary(self):
+        if self.position[0] < 0:
+            self.position[0] = 0
+        elif self.position[0] + self.width > self.SW:
+            self.position[0] = self.SW - self.width 
+
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))
 

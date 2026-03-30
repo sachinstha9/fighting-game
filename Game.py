@@ -17,9 +17,10 @@ class Game:
     def action(self, keys, events):
         self.environment.action(keys, events)
 
-    def render(self):
+    def update(self):
         screen.fill(COLORS["BACKGROUND"])
 
+        self.environment.update()
         self.environment.render()
 
         pygame.display.update()
@@ -37,4 +38,4 @@ while True:
             exit()
 
     g.action(keys, events)
-    g.render()
+    g.update()
