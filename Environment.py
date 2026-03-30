@@ -79,9 +79,9 @@ class Environment:
         return reward_sprite1, reward_sprite2, done
 
 
-    def action(self, keys, events):
-        self.sprite1.action(keys, events)
-        self.sprite2.action(keys, events)
+    # def action(self, keys, events):
+    #     self.sprite1.action(keys, events)
+    #     self.sprite2.action(keys, events)
 
     def sword_collision_detection(self, sword, enemy):
         return (sword.position[0] < enemy.position[0] + enemy.width and
@@ -126,9 +126,6 @@ class Environment:
 
         self.sprite1.check_boundary()
         self.sprite2.check_boundary()
-
-
-        self.handle_attack()
 
     def render(self):
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))

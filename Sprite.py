@@ -104,7 +104,7 @@ class Sprite:
     #                 if not self.allow_attack:
     #                     self.allow_attack = True
 
-    def step(self, action):
+    def step(self, action=4):
         if action == 0:
             self.attack()
         elif action == 1:

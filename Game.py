@@ -29,7 +29,7 @@ class Game:
             self.environment.sprite2.health,
         ]
 
-    def step(self, action_sprite1, action_sprite2):
+    def step(self, action_sprite1=4, action_sprite2=4):
         return self.get_state(), self.environment.step(action_sprite1, action_sprite2)
 
     def action(self, keys, events):
@@ -55,5 +55,7 @@ while True:
         if event.type == pygame.QUIT:
             exit()
 
-    g.action(keys, events)
+    print(g.step())
+
+    # g.action(keys, events)
     g.update()
