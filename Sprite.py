@@ -55,54 +55,71 @@ class Sprite:
         self.health_bar_width = 200
         self.health_bar_height = 20
 
-    def action(self, keys, events=None):
-        if self.initial_facing == 'right':
-            if keys[pygame.K_RETURN]:
-                self.attack()
+    # def action(self, keys, events=None):
+    #     if self.initial_facing == 'right':
+    #         if keys[pygame.K_RETURN]:
+    #             self.attack()
 
-            if keys[pygame.K_RIGHT]:
-                self.position[0] += self.velocity
-                self.current_facing = 'right'
+    #         if keys[pygame.K_RIGHT]:
+    #             self.position[0] += self.velocity
+    #             self.current_facing = 'right'
             
-            if keys[pygame.K_LEFT]:
-                self.position[0] -= self.velocity
-                self.current_facing = 'left'
+    #         if keys[pygame.K_LEFT]:
+    #             self.position[0] -= self.velocity
+    #             self.current_facing = 'left'
 
-            if keys[pygame.K_DOWN]:
-                self.height = 100
-                self.position[1] = self.ground_position[1] - self.height
+    #         if keys[pygame.K_DOWN]:
+    #             self.height = 100
+    #             self.position[1] = self.ground_position[1] - self.height
 
-            if keys[pygame.K_UP]:
-                self.is_jumping = True
+    #         if keys[pygame.K_UP]:
+    #             self.is_jumping = True
 
-        if self.initial_facing == 'left':
-            if keys[pygame.K_SPACE]:
-                self.attack()
+    #     if self.initial_facing == 'left':
+    #         if keys[pygame.K_SPACE]:
+    #             self.attack()
 
-            if keys[pygame.K_d]:
-                self.position[0] += self.velocity
-                self.current_facing = 'right'
+    #         if keys[pygame.K_d]:
+    #             self.position[0] += self.velocity
+    #             self.current_facing = 'right'
             
-            if keys[pygame.K_a]:
-                self.position[0] -= self.velocity
-                self.current_facing = 'left'
+    #         if keys[pygame.K_a]:
+    #             self.position[0] -= self.velocity
+    #             self.current_facing = 'left'
 
-            if keys[pygame.K_s]:
-                self.height = 100
-                self.position[1] = self.ground_position[1] - self.height
+    #         if keys[pygame.K_s]:
+    #             self.height = 100
+    #             self.position[1] = self.ground_position[1] - self.height
 
-            if keys[pygame.K_w]:
-                self.is_jumping = True
+    #         if keys[pygame.K_w]:
+    #             self.is_jumping = True
 
-        for event in events:
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    self.height = 150
-                    self.position[1] = self.ground_position[1] - self.height
+    #     for event in events:
+    #         if event.type == pygame.KEYUP:
+    #             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+    #                 self.height = 150
+    #                 self.position[1] = self.ground_position[1] - self.height
                 
-                if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
-                    if not self.allow_attack:
-                        self.allow_attack = True
+    #             if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+    #                 if not self.allow_attack:
+    #                     self.allow_attack = True
+
+    def step(self, action):
+        if action == 0:
+            self.attack()
+        elif action == 1:
+            self.position[0] += self.velocity
+            self.current_facing = 'right'
+        elif action == 2:
+            self.position[0] -= self.velocity
+            self.current_facing = 'right'
+        elif action == 3:
+            self.is_jumping = True
+
+        if action != 0:
+            if not self.allow_attack:
+                self.allow_attack = True
+                    
 
     def jump(self):
         if self.is_jumping:

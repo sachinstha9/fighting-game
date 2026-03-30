@@ -29,6 +29,9 @@ class Game:
             self.environment.sprite2.health,
         ]
 
+    def step(self, action_sprite1, action_sprite2):
+        return self.get_state(), self.environment.step(action_sprite1, action_sprite2)
+
     def action(self, keys, events):
         self.environment.action(keys, events)
 
