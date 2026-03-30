@@ -16,7 +16,7 @@ class Sprite:
         self.width = 40
         self.height = 150
 
-        self.position = [100 if self.initial_facing == 'right' else self.SW - self.width - 100, self.ground_position[1] - self.height]
+        self.position = [50 if self.initial_facing == 'right' else self.SW - self.width - 50, self.ground_position[1] - self.height]
 
         self.sword = Sword(self.screen)
 
@@ -31,6 +31,8 @@ class Sprite:
         self.gravity = 0.7
 
         self.health = 100
+        self.health_bar_width = 200
+        self.health_bar_height = 20
 
     def action(self, keys, events=None):
         if self.initial_facing == 'right':
@@ -106,5 +108,11 @@ class Sprite:
 
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.position[0], self.position[1], self.width, self.height))
+
+        # health bar
+        pygame.draw.rect(self.screen, self.color, (50 if self.initial_facing == 'right' else self.SW - (self.health * 2) - 50, 50, self.health * 2, self.health_bar_height))
+
+        # health bar outline 
+        pygame.draw.rect(self.screen, self.color, (50 if self.initial_facing == 'right' else self.SW - self.health_bar_width - 50, 50, self.health_bar_width, self.health_bar_height), 1)
 
         self.sword.render(self.position, self.width, self.current_facing)
