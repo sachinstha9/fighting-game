@@ -30,16 +30,20 @@ class Sprite:
         self.velocity_y = 15
         self.gravity = 0.7
 
+        self.health = 100
+
     def action(self, keys, events=None):
         if self.initial_facing == 'right':
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_RETURN]:
                 self.attack()
 
             if keys[pygame.K_RIGHT]:
                 self.position[0] += self.velocity
+                self.current_facing = 'right'
             
             if keys[pygame.K_LEFT]:
                 self.position[0] -= self.velocity
+                self.current_facing = 'left'
 
             if keys[pygame.K_DOWN]:
                 self.height = 100
@@ -48,11 +52,30 @@ class Sprite:
             if keys[pygame.K_UP]:
                 self.is_jumping = True
 
-            for event in events:
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_DOWN:
-                        self.height = 150
-                        self.position[1] = self.ground_position[1] - self.height
+        if self.initial_facing == 'left':
+            if keys[pygame.K_SPACE]:
+                self.attack()
+
+            if keys[pygame.K_d]:
+                self.position[0] += self.velocity
+                self.current_facing = 'right'
+            
+            if keys[pygame.K_a]:
+                self.position[0] -= self.velocity
+                self.current_facing = 'left'
+
+            if keys[pygame.K_s]:
+                self.height = 100
+                self.position[1] = self.ground_position[1] - self.height
+
+            if keys[pygame.K_w]:
+                self.is_jumping = True
+
+        for event in events:
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.height = 150
+                    self.position[1] = self.ground_position[1] - self.height
 
     def jump(self):
         if self.is_jumping:

@@ -31,6 +31,7 @@ class Environment:
         self.sprite2.sword_attack()
 
         self.sprite1.jump()
+        self.sprite2.jump()
 
         pygame.draw.rect(self.screen, self.ground_color, (self.ground_position[0], self.ground_position[1], self.ground_width, self.ground_height))
 
