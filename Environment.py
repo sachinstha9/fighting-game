@@ -22,6 +22,10 @@ class Environment:
         self.before_health_sprite1 = self.sprite1.health
         self.before_health_sprite2 = self.sprite2.health
 
+    def reset(self):
+        self.sprite1.reset()
+        self.sprite2.reset()
+
     def action(self, keys, events):
         self.sprite1.action(keys, events)
         self.sprite2.action(keys, events)

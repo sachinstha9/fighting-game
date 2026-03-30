@@ -14,6 +14,21 @@ class Game:
     def __init__(self):
         self.environment = Environment(screen, SW, SH)
 
+    def reset(self):
+        self.environment.reset()
+
+        return self.get_state()
+
+    def get_state(self):
+        return [
+            self.environment.sprite1.position[0],
+            self.environment.sprite1.position[1],
+            self.environment.sprite1.health,
+            self.environment.sprite2.position[0],
+            self.environment.sprite2.position[1],
+            self.environment.sprite2.health,
+        ]
+
     def action(self, keys, events):
         self.environment.action(keys, events)
 

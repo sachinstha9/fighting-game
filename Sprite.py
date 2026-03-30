@@ -35,6 +35,26 @@ class Sprite:
         self.health_bar_width = 200
         self.health_bar_height = 20
 
+    def reset(self):
+        self.width = 40
+        self.height = 150
+        self.position = [200 if self.initial_facing == 'right' else self.SW - self.width - 200, self.ground_position[1] - self.height]
+
+        self.is_attacking = False
+        self.attack_timer = 0
+        self.allow_attack = True
+
+        self.velocity = 10
+
+        self.is_jumping = False
+
+        self.velocity_y = 15
+        self.gravity = 0.7
+
+        self.health = 100
+        self.health_bar_width = 200
+        self.health_bar_height = 20
+
     def action(self, keys, events=None):
         if self.initial_facing == 'right':
             if keys[pygame.K_RETURN]:
